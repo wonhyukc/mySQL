@@ -38,6 +38,8 @@ insert 사원 values ('정원혁', 'hyuk@mail.com', null), ('이지윤', 'hj@sma
 select * from 사원;
 select id, 이름 from 사원;
 
+insert 사원 values ('정원혁', 'hyuk@mail.com', null);	
+select * from 사원;
 update 사원 set mail = 'js@mail.com' where id = 3;
 select * from 사원;
 update 사원 set mail = 'js@mail.com' , 이름 = '김정선' where id = 3;

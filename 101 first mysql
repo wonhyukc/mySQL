@@ -10,8 +10,8 @@
 	테이블 만들기, 보이기, 지우기
 	데이터 INSERT, SELECT, UPDATE, DELETE
 */
-DROP DATABASE `test`;			-- IF EXISTS test;
-CREATE DATABASE `test`;		-- IF NOT EXISTS test;
+DROP DATABASE `test`;			-- DROP DATABASE IF EXISTS test;
+CREATE DATABASE `test`;		-- CREATE DATABASE IF NOT EXISTS test;
 use test;
 show tables;
 create table 사원(

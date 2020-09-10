@@ -139,3 +139,9 @@ SELECT * FROM Vacation;
 
 TRUNCATE TABLE Vacation;
 SELECT * FROM Vacation;
+
+
+/*
+	실행하기 전/후에 "206-01 HRDB 데이터베이스.sql" 을 실행해서 깨끗한 HRDB를 만들어 두고 진행하세요.
+    이 실습을 하면 데이터가 달라집니다. 
+*/

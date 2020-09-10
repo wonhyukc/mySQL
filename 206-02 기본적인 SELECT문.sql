@@ -166,7 +166,7 @@ SELECT EmpID AS '사번', EmpName AS '이름', Gender AS '성별', HireDate AS '
 
 -- 4) 열에 대한 계산식 사용
 
-SELECT EmpName + '(' + EmpID + ')' AS 'EmpName', Gender, EMail 
+SELECT EmpID, EmpName, concat(EmpName , '(' ,EmpID, ')') AS 'EmpName', Gender, EMail 
 	FROM Employee
 	WHERE DeptID = 'MKT';
 

@@ -170,84 +170,36 @@ SELECT NULL, Gender, SUM(Salary) AS 'Tot_Salary'
 	ORDER BY Gender, DeptID
 ;
 
-/*
--- GROUPING SETS 사용
-SELECT DeptID, Gender, SUM(Salary) AS 'Tot_Salary'
-	FROM Employee
-	WHERE RetireDate IS NULL
-	GROUP BY GROUPING SETS (DeptID, Gender)
-	ORDER BY Gender, DeptID
-;
-
--- 전체 집계만 보여주기
-SELECT DeptID, Gender, SUM(Salary) AS 'Tot_Salary'
-	FROM Employee
-	WHERE DeptID IN ('SYS', 'MKT') AND RetireDate IS NULL
-	GROUP BY GROUPING SETS((DeptID, Gender), ())
-;
-
--- 부서 소계 + 전체 집계 보여주기
-SELECT DeptID, Gender, SUM(Salary) AS 'Tot_Salary'
-	FROM Employee
-	WHERE DeptID IN ('SYS', 'MKT') AND RetireDate IS NULL
-	GROUP BY GROUPING SETS((DeptID, Gender), (DeptID), ())
-;
-
--- 부서 소계만 보여주기(전체 집계 생략)
-SELECT DeptID, Gender, SUM(Salary) AS 'Tot_Salary'
-	FROM Employee
-	WHERE DeptID IN ('SYS', 'MKT') AND RetireDate IS NULL
-	GROUP BY GROUPING SETS((DeptID, Gender), (DeptID))
-;
-*/
-
-
 -- 
 --  B. 순위 구하기
 -- 
 
 
 -- 1) 순위 표시: RANK
-
 -- 전체 순위
-SELECT EmpID, EmpName, Gender, Salary, @curRank := @curRank + 1 AS rank
-FROM Employee e, (SELECT @curRank := 0) r
-WHERE DeptID IN ('SYS', 'MKT') AND RetireDate IS NULL
-order by Salary DESC
-;
 
+SELECT EmpID, EmpName, Gender, Salary, rank() over (order by Salary)  순위
+FROM Employee e
+WHERE DeptID IN ('SYS', 'MKT') AND RetireDate IS NULL;
 
-/*
 -- 영역별 순위
 SELECT EmpID, EmpName, Gender, Salary, 
 	RANK() OVER(PARTITION BY Gender ORDER BY Salary DESC) AS 'Rnk'
    FROM Employee
    WHERE DeptID IN ('SYS', 'MKT') AND RetireDate IS NULL
 ;
-SELECT city, country, population
-   FROM
-     (SELECT city, country, population, 
-                  @country_rank := IF(@current_country = country, @country_rank + 1, 1) AS country_rank,
-                  @current_country := country 
-       FROM cities
-       ORDER BY country, population DESC
-     ) ranked
-   WHERE country_rank <= 2;
-*/
+
+
+
 
 -- 2) 순위 표시: DENSE_RANK
 
-/*
+
 -- 전체 순위
 SELECT EmpID, EmpName, Gender, Salary,  DENSE_RANK() OVER(ORDER BY Salary DESC) AS 'Rnk'
    FROM Employee
    WHERE DeptID IN ('SYS', 'MKT') AND RetireDate IS NULL
 ;
-set @sno:=0; 
-set @names:=''; 
-select @sno:=case when @names=names then @sno else @sno+1 end as sno,@names:=names as names from test 
-order by names;
-*/
 
 -- 영역별 순위
 SELECT EmpID, EmpName, Gender, Salary, 
@@ -291,74 +243,3 @@ SELECT EmpID, EmpName, Gender, Salary,
 ;
 
 
-
--- 
---  C. PIVOT과 UNPIVOT
--- 
-
-
--- 1) PIVOT
-
--- 부서 코드를 포함한 직원들의 휴가 현황
-SELECT v.EmpID, e.DeptID, Year(v.BeginDate) AS 'Year', v.Duration
-	FROM Vacation AS v
-	INNER JOIN  Employee AS e ON v.EmpID = e.EmpID
-;
-
--- 부서별 +연도별 휴가 현황 집계
-SELECT e.DeptID, Year(v.BeginDate) AS 'Year', SUM(v.Duration) AS 'Duration'
-	FROM Vacation AS v
-	INNER JOIN  Employee AS e ON v.EmpID = e.EmpID
-	GROUP BY e.DeptID, Year(BeginDate) 
-;
-
-/*
--- 피벗 형태로 표시하기
-SELECT DeptID, [2007], [2008], [2009], [2010], [2011]
-	FROM (
-		SELECT e.DeptID, Year(v.BeginDate) AS 'Year', SUM(v.Duration) AS 'Duration'
-			FROM Vacation AS v
-			INNER JOIN  Employee AS e ON v.EmpID = e.EmpID
-			GROUP BY e.DeptID, Year(BeginDate) 
-	) AS Src
-	PIVOT(SUM(Duration) 
-	FOR Year IN([2007], [2008], [2009], [2010], [2011])) AS Pvt
-;
-
--- 피벗 형태로 표시하기(NULL 값 처리)
-SELECT DeptID, ISNULL([2007], 0) AS '2007', ISNULL([2008], 0) AS '2008', ISNULL([2009], 0) AS '2009', ISNULL([2010], 0) AS '2010', ISNULL([2011], 0) AS '2011'
-	FROM (
-		SELECT e.DeptID, Year(v.BeginDate) AS 'Year', SUM(v.Duration) AS 'Duration'
-			FROM Vacation AS v
-			INNER JOIN  Employee AS e ON v.EmpID = e.EmpID
-			GROUP BY e.DeptID, Year(BeginDate) 
-	) AS Src
-	PIVOT(SUM(Duration) 
-	FOR Year IN([2007], [2008], [2009], [2010], [2011])) AS Pvt
-;
-
-
--- 2) UNPIVOT
-
- -- 피벗 형태 테이블 만들기
- SELECT DeptID, [2007], [2008], [2009], [2010], [2011]
-	INTO YearVacation
-	FROM (
-		SELECT e.DeptID, Year(v.BeginDate) AS 'Year', SUM(v.Duration) AS 'Duration'
-			FROM Vacation AS v
-			INNER JOIN  Employee AS e ON v.EmpID = e.EmpID
-			GROUP BY e.DeptID, Year(BeginDate) 
-	) AS Src
-	PIVOT(SUM(Duration) 
-	FOR Year IN([2007], [2008], [2009], [2010], [2011])) AS Pvt
-;
-
-SELECT * FROM YearVacation
-;
-
--- UNPIVOT
-SELECT DeptID, Year, Duration
-	FROM YearVacation
-	UNPIVOT (Duration FOR Year IN ([2007], [2008], [2009], [2010], [2011])) AS uPvt
-;
-*/

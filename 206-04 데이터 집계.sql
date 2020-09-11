@@ -20,6 +20,16 @@ SELECT database();
 
 
 -- 1) 집계 함수 사용
+select * FROM Employee;
+
+select sum(salary) FROM Employee;
+select AVG(salary) FROM Employee;
+
+select count(salary) FROM Employee;
+select count(*) FROM Employee;
+select count(RetireDate) FROM Employee;
+
+
 
 -- 근무 중인 직원들의 급여의 합 구하기
 SELECT SUM(Salary) AS 'Tot_Salary'
@@ -29,12 +39,16 @@ SELECT SUM(Salary) AS 'Tot_Salary'
 --  근무 중인 직원들의 급여의 최대값, 최소값, 최대값 - 최소값을 구하는 쿼리를 작성하자.
 
 SELECT MAX(Salary) AS 'Max_Salary', MIN(Salary) AS ' Min_Salary',
-			 MAX(Salary) - MIN(Salary) AS ' Diff_Salary'
+			 MAX(Salary) - MIN(Salary) AS ' 연봉격차', 
+             count(*) as 갯수, avg(salary) as 평균연봉
 	FROM Employee
 	WHERE RetireDate IS NULL;
 
 
 -- 2) 집계 함수와 NULL 값 예제
+-- 모든 집계에서 NULL 은 제외된다. 
+
+select * FROM Employee;
 
 UPDATE Employee
 	SET Salary = NULL

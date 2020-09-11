@@ -90,13 +90,13 @@ CREATE TABLE Vacation (
 	BeginDate date NOT NULL,
 	EndDate date NOT NULL,
 	Reason varchar(50) DEFAULT '개인사유'
-	-- Duration AS (DATEDIFF(day, BeginDate, EndDate) + 1),
     -- ,CHECK (EndDate >= BeginDate)
 );
 -- ALTER TABLE  Vacation ADD CHECK (EndDate >= BeginDate);
+-- ALTER TABLE Vacation ADD Duration INT GENERATED ALWAYS AS (DATEDIFF(EndDate, BeginDate)+1);
 
 
-INSERT INTO Vacation VALUES(NULL, 'S0001', '2006-12-24', '2006-12-26', '크리스마스 기념 가족 여행');
+INSERT INTO Vacation VALUES( NULL,'S0001', '2006-12-24', '2006-12-26', '크리스마스 기념 가족 여행');
 INSERT INTO Vacation VALUES( NULL,'S0003', '2007-01-01', '2007-01-07', '신년 맞이 기분 내기');
 INSERT INTO Vacation VALUES( NULL,'S0001', '2007-05-04', '2007-05-04', '어린이날 이벤트 준비');
 INSERT INTO Vacation VALUES( NULL,'S0011', '2009-03-01', '2009-03-02', DEFAULT);

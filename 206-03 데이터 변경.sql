@@ -15,6 +15,18 @@ SELECT database();
 -- 
 --  6.3 데이터 변경
 -- 
+/*
+DML: Data Manipulation Language
+INSERT
+UPDATE
+DELETE
+SELECT
+
+DDL: Data Definition Language
+CREATE TABLE/VIEW/PROC.....
+ALTER 
+DROP
+*/
 
 
 
@@ -22,13 +34,17 @@ SELECT database();
 --  A. INSERT
 -- 
 
-
 -- 1) 기본적인 INSERT 문
 
 -- 대상 열 나열
 INSERT INTO Department(DeptID, DeptName, UnitID, StartDate)
    VALUES('PRD', N'상품', 'A', now());
 SELECT * FROM Department;
+
+INSERT INTO Department(DeptName, UnitID, StartDate, DeptID)
+   VALUES(N'상품', 'A', now(), 'PR2');
+SELECT * FROM Department;
+
 
 -- 대상 열 생략
 INSERT INTO Department
@@ -52,6 +68,7 @@ CREATE TABLE SampleVacation
 
 -- 상위 5 건만 INSERT
 INSERT SampleVacation
+
    SELECT VacationID, EmpID, BeginDate, EndDate, Reason
       FROM Vacation
 	  ORDER BY BeginDate DESC
@@ -69,10 +86,17 @@ DELETE FROM Vacation	-- FROM 빠지면 오류
 
 SELECT * FROM Vacation;
 
--- AUTO_INCREMENT 에 임의의 값 삽입: 가능하다.
-INSERT INTO Vacation(VacationID, EmpID, BeginDate, EndDate, Reason)
-   VALUES(2, 'S0003', '2007-01-02', '2007-01-08', N'신년 맞이 기분 내기');
+-- 정상적인 입력
+INSERT INTO Vacation VALUES( NULL,'S0002', '2006-12-24', '2006-12-26', '크리스마스 기념 가족 여행');
+SELECT * FROM Vacation;
 
+-- AUTO_INCREMENT 에 임의의 값 삽입: 가능하다.
+INSERT INTO Vacation
+   VALUES(23, 'S0003', '2007-01-02', '2007-01-08', '신년 맞이 기분 내기');   
+SELECT * FROM Vacation;
+
+-- 그럼 이번엔 무슨 값이 입력될까?
+INSERT INTO Vacation VALUES( NULL,'S0002', '2006-12-24', '2006-12-26', '크리스마스 기념 가족 여행');
 SELECT * FROM Vacation;
 
 

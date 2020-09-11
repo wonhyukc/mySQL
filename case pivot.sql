@@ -7,7 +7,7 @@
 USE hrdb;
 DROP TABLE IF EXISTS wages ;
 
-CREATE TABLE wages
+CREATE TEMPORARY TABLE wages
 (
 	사번	TINYINT	primary key AUTO_INCREMENT
 ,	시급 float	NULL

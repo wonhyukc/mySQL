@@ -4,16 +4,16 @@
 */
 
 -- 1.1
-USE tempdb;
+USE hrdb;
 DROP TABLE IF EXISTS wages ;
 
 CREATE TABLE wages
 (
-	emp_id	TINYINT	primary key AUTO_INCREMENT
-,	hourly_wage	float	NULL
-,	salary	float	NULL
-,	commission	float	NULL
-,	num_sales	int	NULL
+	사번	TINYINT	primary key AUTO_INCREMENT
+,	시급 float	NULL
+,	월급 float	NULL
+,	수수료 float	NULL
+,	판매량 int	NULL
 )
 ;
 
@@ -34,85 +34,33 @@ INSERT wages VALUES(NULL, NULL, NULL, 20000, 6);
 -- 1.3
 SELECT * FROM wages;
 
+
+/*
+case
+	when 조건 then 참일때
+    when 조건 then 참일때
+    else 앞선조건에해당안될때 
+end 
+*/
 -- 1.4
 SELECT 
-    emp_id,
+    *,
     CASE
-        WHEN hourly_wage IS NOT NULL THEN hourly_wage * 40 * 52
-        WHEN salary IS NOT NULL THEN salary
-        ELSE commission * num_sales
+        WHEN 시급 IS NOT NULL THEN 시급 * 40 * 52
+        WHEN 월급 IS NOT NULL THEN 월급
+        ELSE 수수료 * 판매량
     END AS '연봉'
 FROM
     wages;
 
-
 -- 1.5
 SELECT 
-    emp_id,
-    COALESCE( hourly_wage * 40 * 52, salary, commission * num_sales )     AS '연봉'
+    사번,
+    COALESCE( 
+		시급 * 40 * 52, 
+        월급, 
+        수수료 * 판매량 
+	)     AS '연봉'
 FROM
     wages;
-
-
--- 
-SELECT	title_id AS '책번호'
-	,	qty AS '수량'
-	,	'등급' =  
-	CASE 
-		WHEN qty >= 50 THEN 'A'
-		WHEN qty >= 30 THEN 'B'
-		ELSE 'C'
-	END
-FROM pubs..sales
-
-
--- 
--- 
-
-use pubs
-select stor_id, year(ord_date) as yr, qty
-from sales
-order by 1, 2
-
-/*
-case when  조건 then 참 else 거짓 end 
-case 조건 when 조건값  then 참 else 거짓 end 
-*/
-
-select stor_id, year(ord_date) as yr, qty
-	, case 
-			when qty>=50 then 'A' 
-			when qty>=20 then 'B' 
-			else 'C'
-		end  as 등급
-from sales
-order by 1, 2
-
-
-select stor_id, year(ord_date) as yr, qty
-from sales
-order by 1, 2
-
-select stor_id 
-	, case year(ord_date)	when 1992	then qty	else 0	end as y92
-	, case year(ord_date)	when 1993	then qty	else 0	end as y93
-	, case year(ord_date)	when 1994	then qty	else 0	end as y94
-from sales
-
-select stor_id 
-	, sum( case year(ord_date)	when 1992	then qty	else 0	end ) as y92
-	, sum( case year(ord_date)	when 1993	then qty	else 0	end ) as y93
-	, sum( case year(ord_date)	when 1994	then qty	else 0	end ) as y94
-from sales
-group by stor_id
-
-select stor_id, isnull([1992],0) as [1992],[1993],[1994]
-from 
-(
-	select stor_id, year(ord_date) as yr, qty
-	from sales
-) src
-PIVOT (
-	sum(qty) for yr IN ([1992],[1993],[1994])
-) pvt
 

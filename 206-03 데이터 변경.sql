@@ -17,17 +17,36 @@ SELECT database();
 -- 
 /*
 DML: Data Manipulation Language
+
 INSERT
 UPDATE
 DELETE
+
 SELECT
 
 DDL: Data Definition Language
-CREATE TABLE/VIEW/PROC.....
+
+CREATE TABLE | VIEW | PROC.....
 ALTER 
 DROP
 */
 
+/* 기본 골격
+
+INSERT INTO 테이블 
+VALUES
+
+UPDATE 테이블
+SET 컬럼 = 값, ....
+WHERE
+
+DELETE FROM  테이블
+WHERE 
+
+SELECT 컬럼
+FROM 테이블
+WHERE 
+*/
 
 
 -- 
@@ -140,7 +159,7 @@ select * from Employee where empid = 's0001';
 
 
 UPDATE Employee 
-SET RetireDate = now();
+SET salary = 100000;
 
 /*
 다음 오류 메시지가 나오면 
@@ -161,11 +180,14 @@ select * from Employee;
 -- 1) 기본적인 DELETE문
 
 SELECT * FROM Vacation;
+
 DELETE from Vacation
    WHERE VacationID = 10;
+   
 SELECT * FROM Vacation;
--- TRUNCATE TABLE
 
+-- TRUNCATE TABLE
+DELETE from Vacation;
 TRUNCATE TABLE Vacation;
 SELECT * FROM Vacation;
 

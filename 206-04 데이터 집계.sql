@@ -155,33 +155,40 @@ SELECT DeptID, AVG(Salary) AS 'Avg_Salary'
 ;
 
 
--- 5) 새로운 그룹 별 집계 방법: GROUPING SETS
 
-SELECT DeptID, SUM(Salary) AS 'Tot_Salary'
-	FROM Employee
-	WHERE RetireDate IS NULL
-	GROUP BY DeptID
+-- 5) ROLLUP
+
+SELECT DeptID, AVG(Salary) AS '평균연봉'
+FROM Employee
+GROUP BY DeptID
 ;
 
-SELECT Gender, SUM(Salary) AS 'Tot_Salary'
-	FROM Employee
-	WHERE RetireDate IS NULL
-	GROUP BY Gender
+SELECT Gender, AVG(Salary) AS '평균연봉'
+FROM Employee
+GROUP BY Gender
 ;
 
--- 결과 결합
-SELECT DeptID, NULL AS 'Gender', SUM(Salary) AS 'Tot_Salary'
-	FROM Employee
-	WHERE RetireDate IS NULL
-	GROUP BY DeptID
+SELECT Gender, DeptID, AVG(Salary) AS '평균연봉'
+FROM Employee
+WHERE RetireDate IS NULL
+GROUP BY Gender, DeptID
+ORDER BY Gender, DeptID
+;
 
-UNION
+SELECT Gender, DeptID, AVG(Salary) AS '평균연봉',
+	GROUPING(DeptID), 
+    GROUPING(Gender)
+FROM Employee
+WHERE RetireDate IS NULL
+GROUP BY Gender, DeptID WITH ROLLUP
+ORDER BY Gender, DeptID
+;
 
-SELECT NULL, Gender, SUM(Salary) AS 'Tot_Salary'
-	FROM Employee
-	WHERE RetireDate IS NULL
-	GROUP BY Gender
-	ORDER BY Gender, DeptID
+SELECT DeptID, Gender, AVG(Salary) AS '평균연봉'
+FROM Employee
+WHERE RetireDate IS NULL
+GROUP BY DeptID, Gender WITH ROLLUP
+ORDER BY DeptID, Gender
 ;
 
 -- 

@@ -38,23 +38,23 @@ DROP
 
 -- 대상 열 나열
 INSERT INTO Department(DeptID, DeptName, UnitID, StartDate)
-   VALUES('PRD', N'상품', 'A', now());
+   VALUES('PRD', '상품', 'A', now());
 SELECT * FROM Department;
 
 INSERT INTO Department(DeptName, UnitID, StartDate, DeptID)
-   VALUES(N'상품', 'A', now(), 'PR2');
+   VALUES('상품', 'A', now(), 'PR2');
 SELECT * FROM Department;
 
 
 -- 대상 열 생략
 INSERT INTO Department
-   VALUES('DBA', N'DB관리', 'A', now());
+   VALUES('DBA', 'DB관리', 'A', now());
 SELECT * FROM Department;
 
 
 -- 2) 동시에 여러 행 INSERT 가능
 INSERT INTO Department
-   VALUES('OPR', N'운영', 'A', now()), ('CST', N'고객서비스', NULL, now());
+   VALUES('OPR', '운영', 'A', now()), ('CST', '고객서비스', NULL, now());
 
 SELECT * FROM Department;
 
@@ -109,22 +109,26 @@ SELECT * FROM Vacation;
 -- 1) 기본적인 UPDATE 문
 
 UPDATE Employee
-   SET EmpName = N'홍길퉁'
-   WHERE EmpID = 'S0001';
+   SET EmpName = '홍길퉁'
+   -- WHERE EmpID = 'S0001'
+   ;
 
 SELECT * 
 	FROM Employee
-	WHERE EmpID = 'S0001';
+	-- WHERE EmpID = 'S0001'
+    ;
 
 
 -- 2) FROM 절을 사용한 다양한 조건 지정
 select * from Employee;
+
 SELECT EmpID, COUNT(*) as cnt	FROM Vacation GROUP BY  EmpID  HAVING count(*) > 2;
 --  "206-04 데이터 집계.sql" 를 배워야 이해할 수 있다.
+
 select * from Employee where empid = 's0001';
 -- salary 값을 기억해두자 : 8500
 
-UPDATE Employee a
+UPDATE Employee AS a
 	JOIN (
 		SELECT EmpID, COUNT(*) as cnt	FROM Vacation GROUP BY  EmpID  HAVING count(*) > 2
     ) b ON a.EmpID = b.EmpID	
@@ -135,11 +139,12 @@ select * from Employee where empid = 's0001';
 -- salary 값을 비교해보자. : 8500 > 6800
 
 
-UPDATE Employee a
+UPDATE Employee 
 SET RetireDate = now();
+
 /*
 다음 오류 메시지가 나오면 
-SET RetireDate = now()	Error Code: 1175. You are using safe update mode and you tried to update a table without a WHERE that uses a KEY column. 
+Error Code: 1175. You are using safe update mode and you tried to update a table without a WHERE that uses a KEY column. 
  To disable safe mode, toggle the option in Preferences -> SQL Editor and reconnect.
  
 이걸 해야 한다.

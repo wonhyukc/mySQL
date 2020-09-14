@@ -64,3 +64,13 @@ SELECT
 FROM
     wages;
 
+
+-- 1.6 일반적인 case
+select * from employee;
+SELECT empName, 
+	CASE 
+		WHEN Salary >= 8000 THEN "고액연봉자"
+		WHEN Salary >= 5000 THEN "보통연봉자"
+		ELSE "저액연봉자"
+	END as 연봉구분
+FROM employee;

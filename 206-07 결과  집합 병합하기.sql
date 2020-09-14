@@ -76,3 +76,14 @@ SELECT EmpID, EmpName, DeptID, HireDate, EMail, Salary
 		WHERE Salary >= 7000
 	)
 ;
+
+SELECT EmpID, EmpName, DeptID, HireDate, EMail, Salary
+	FROM Employee e
+	WHERE HireDate BETWEEN '2008-01-01' AND '2008-12-31' 
+    AND NOT EXISTS (
+		SELECT EmpID
+		FROM Employee
+		WHERE Salary >= 7000
+			AND empId = e.empID
+	)
+;

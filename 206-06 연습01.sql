@@ -32,4 +32,15 @@ where jh.employee_id is null
 
 
 
+-- 하나 이상의  부서를 할당받은 UNIT
+select * from unit;
+
+select * from department;
+
+select * from unit
+where unitid in (select unitid from department);
+
+select DISTINCT u.* from unit u
+	join department d on u.UnitID = d.unitid
+
 

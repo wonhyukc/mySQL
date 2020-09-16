@@ -13,33 +13,50 @@ USE HRDB
 
 
 -- 1) INNER JOIN
+SELECT e.EmpID, e.EmpName, e.DeptID, d.DeptName
+   FROM Employee e
+   INNER JOIN Department d ON e.DeptID = d.DeptID
+;
 
 -- 부서 이름을 포함해서 직원 정보 표시
 SELECT e.EmpID, e.EmpName, e.DeptID, d.DeptName
    FROM Employee e
    INNER JOIN Department d ON e.DeptID = d.DeptID
-   WHERE e.DeptID IN ('GEN', 'HRD', 'ACC') AND RetireDate IS NULL
+   WHERE e.DeptID IN ('GEN', 'HRD', 'ACC') 
+		AND RetireDate IS NULL
 ;
 
 
 -- 2) OUTER JOIN
 
--- 본부 이름을 포함해서 부서 정보 표시
 -- INNER JOIN의 경우
 SELECT d.DeptID, d.DeptName, d.UnitID, u.UnitName
    FROM Department AS d
-   INNER JOIN Unit AS u ON d.UnitID = u.UnitID
+   JOIN Unit AS u ON d.UnitID = u.UnitID
 ;
 
 -- OUTER JOIN의 경우
 SELECT d.DeptID, d.DeptName, d.UnitID, u.UnitName
-   FROM Department AS d
-   LEFT OUTER JOIN Unit AS u ON d.UnitID = u.UnitID
+   FROM Department AS d    LEFT  JOIN Unit AS u ON d.UnitID = u.UnitID
+   -- FROM Unit AS u right JOIN Department AS d    ON d.UnitID = u.UnitID
 ;
 
 
 -- 3) 여러 테이블간의 조인
 ALTER TABLE Vacation ADD Duration INT GENERATED ALWAYS AS (DATEDIFF(EndDate, BeginDate)+1);
+
+-- 휴가를 사용한 직원들의 휴가 사용 현황 얻기
+SELECT *       
+   FROM Employee e
+   INNER JOIN Vacation v ON e.EmpID = v.EmpID
+   ORDER BY e.EmpID ASC
+;
+
+SELECT *       
+   FROM Employee e
+   left JOIN Vacation v ON e.EmpID = v.EmpID
+   ORDER BY e.EmpID ASC
+;
 
 -- 휴가를 사용한 직원들의 휴가 사용 현황 얻기
 SELECT e.EmpID, e.EmpName, d.DeptName, u.UnitName, 
@@ -73,3 +90,17 @@ SELECT e1.EmpID, e1.EmpName, e1.Salary, e2.EmpName,
    WHERE e1.EmpID <> e2.EmpID AND e1.EmpID  IN ('S0004', 'S0005')
    ORDER BY e1.EmpID ASC, Salary_diff DESC
 ;
+
+
+-- 휴가를 안간 직원
+select e.* from vacation v
+	right join employee e on e.empid =  v.empid
+where vacationid is null
+;
+
+-- unit 배정이 안된 부서
+select d.* 
+from department d
+	left join unit u on u.unitid = d.unitid
+where u.unitid is null
+    ;

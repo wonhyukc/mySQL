@@ -25,7 +25,6 @@ order by 1,2
 ;
 
 
-
 -- 별칭
 select  EmpName, Gender, hireDate, retireDate, salary, DeptName as 부서명
 from employee as e join department	as d  	on e.deptID = d.deptID;

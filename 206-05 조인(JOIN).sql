@@ -78,8 +78,21 @@ SELECT e.EmpID, e.EmpName, d.DeptName, u.UnitName,
    ORDER BY e.EmpID ASC
 ;
 
+-- FULL OUTER JOIN (잘 안쓰이는)
+SELECT * FROM UNIT;
+INSERT UNIT VALUES (D, '제0본부');
 
--- 4) Non-Equi 조인
+SELECT *       
+   FROM Department d
+   LEFT JOIN Unit u ON d.unitID = u.UnitID
+
+UNION
+
+SELECT *       
+   FROM Department d
+   RIGHT JOIN Unit u ON d.unitID = u.UnitID
+;   
+-- 4) Non-Equi 조인 (머리아프면 나중에 공부)
 
 -- 'S0004', 'S0005' 직원보다 더 많은 급여를 받는 직원의 정보와 급여 차
 

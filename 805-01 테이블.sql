@@ -7,12 +7,11 @@
 --  5.1 테이블 만들기
 -- 
 
-
 -- 1) Smaple 데이터베이스 만들기
 
-DROP DATABASE IF EXISTS Sample 
+-- DROP DATABASE IF EXISTS Sample 
 ;
-CREATE DATABASE Sample
+CREATE DATABASE IF NOT EXISTS Sample
 ;
 
 
@@ -20,6 +19,7 @@ CREATE DATABASE Sample
 
 USE Sample
 ;
+SHOW TABLES;
 
 -- 직원 테이블 만들기
 CREATE TABLE 직원 (

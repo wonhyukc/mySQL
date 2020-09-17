@@ -37,6 +37,11 @@ CREATE TABLE 직원 (
 
 
 
+
+DESC titles;
+SHOW CREATE TABLE titles;
+
+
 -- 3) 열 추가 및 삭제
 
 -- 열 추가
@@ -56,3 +61,4 @@ ALTER TABLE 직원
 -- 테이블 이름 바꾸기
 ALTER TABLE 직원
   RENAME TO 사원;
+

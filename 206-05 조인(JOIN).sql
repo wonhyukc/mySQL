@@ -80,7 +80,7 @@ SELECT e.EmpID, e.EmpName, d.DeptName, u.UnitName,
 
 -- FULL OUTER JOIN (잘 안쓰이는)
 SELECT * FROM UNIT;
-INSERT UNIT VALUES (D, '제0본부');
+INSERT UNIT VALUES ('D', '제0본부');
 
 SELECT *       
    FROM Department d

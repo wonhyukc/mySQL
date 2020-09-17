@@ -67,6 +67,7 @@ SELECT EmpID, EmpName, DeptID, (SELECT DeptName FROM Department
 ;
 
 
+
 -- 3) EXISTS
 
 -- 휴가를 간 적이 있는 직원 정보
@@ -75,7 +76,7 @@ SELECT EmpID, EmpName, EMail
    WHERE EXISTS(SELECT * 
                    FROM Vacation 
                    WHERE EmpID = e.EmpID);
-;
+
 
 -- 휴가를 간 적이 없는 직원 정보
 SELECT EmpID, EmpName, EMail 

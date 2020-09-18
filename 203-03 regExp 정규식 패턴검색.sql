@@ -1,4 +1,5 @@
 USE pubs;
+SELECT * FROM titles;
 /*
 http://en.wikipedia.org/wiki/Regular_expression#POSIX_Basic_Regular_Expressions
 
@@ -36,6 +37,20 @@ pattern4 = "<[^>]*>"   '태그만
 pattern5 = "[^-a-zA-Z0-9/ ]"    '영어 숫자만
 */
 
+-- 정규식, 패턴 검색
+SELECT title_id, title FROM titles
+WHERE title LIKE 'computer%';
+
+SELECT POSITION('Jam' IN 'James Mike');
+SELECT POSITION('Mi' IN 'James Mike');
+SELECT POSITION('me' IN 'James Mike');
+-- SELECT REGEXP_INSTR('M%', 'McAthur');
+-- SELECT REGEXP_INSTR('McAthur', 'M*' );
+-- SELECT REGEXP_INSTR('McAthur', 'M[^c]*+' );
+-- SELECT REGEXP_INSTR('Mike', 'M[^c].*' );
+-- SELECT REGEXP_LIKE('Mike', 'M[^c]*' );
+-- SELECT REGEXP_LIKE('M', 'M[^c]*' );
+
 SELECT * FROM titles WHERE title REGEXP '.';	-- any single char
 SELECT * FROM titles WHERE title REGEXP 'a';	
 SELECT * FROM titles WHERE title REGEXP 'a.';	
@@ -60,4 +75,18 @@ SELECT * FROM titles WHERE title REGEXP '^S.';	-- Si, St로 시작
 SELECT * FROM titles WHERE title REGEXP '^S[it].';	-- Si, St로 시작
 SELECT * FROM titles WHERE title REGEXP '^S[^it].';	-- Si, St는 제외
 SELECT * FROM titles WHERE title REGEXP '^[c]*.*de$';
-SELECT * FROM titles;
+
+SELECT REGEXP_LIKE('a', '[a-d]'); 	-- [ ] 안에 들어간 것 중 하나
+SELECT REGEXP_LIKE('abcde', '[a-d]'); 	-- [ ] 안에 들어간 것 중 하나
+SELECT REGEXP_LIKE('hijk', '[a-d]'); 	-- [ ] 안에 들어간 것 중 하나
+SELECT REGEXP_LIKE('haijk', '[a-d]'); 	-- [ ] 안에 들어간 것 중 하나
+SELECT REGEXP_LIKE('haijk', '^[a-d]'); 	-- ^ 줄의 앞
+SELECT REGEXP_LIKE('aijk', '[a-d]'); 	-- ^ 줄의 앞
+SELECT REGEXP_LIKE('ABC', '[a-d]');	-- 대소문자 
+SELECT REGEXP_LIKE('aef', '^[a-d]$'); 	-- $ 줄의 끝
+SELECT REGEXP_LIKE('adddd', '^[a-d]$'); 	-- $ 줄의 끝
+SELECT REGEXP_LIKE('adxxxx', '^[a-d]+$');	-- + 앞에 나온 것 반복
+SELECT REGEXP_LIKE('adxxxa', '^[a-d]+$');	-- + 앞에 나온 것 반복
+SELECT REGEXP_LIKE('adaba', '^[a-d]+$');	-- + 앞에 나온 것 반복
+SELECT REGEXP_LIKE('adaba', '^[^a-d]');	-- [ ]  안에 들어가는 ^ 은 그건 제외 
+SELECT REGEXP_LIKE('xadaba', '^[^a-d]');	-- [ ]  안에 들어가는 ^ 은 그건 제외 

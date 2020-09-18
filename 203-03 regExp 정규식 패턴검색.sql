@@ -51,37 +51,37 @@ SELECT POSITION('me' IN 'James Mike');
 -- SELECT REGEXP_LIKE('Mike', 'M[^c]*' );
 -- SELECT REGEXP_LIKE('M', 'M[^c]*' );
 
-SELECT * FROM titles WHERE title REGEXP '.';	-- any single char
-SELECT * FROM titles WHERE title REGEXP 'a';	
-SELECT * FROM titles WHERE title REGEXP 'a.';	
-SELECT * FROM titles WHERE title REGEXP 'computer';
-SELECT * FROM titles WHERE title REGEXP '^a';
-SELECT * FROM titles WHERE title REGEXP '^The';
-SELECT * FROM titles WHERE title REGEXP 'cooking';
-SELECT * FROM titles WHERE title REGEXP 'cooking$';
+SELECT title FROM titles WHERE title REGEXP '.';	-- any single char
+SELECT title FROM titles WHERE title REGEXP 'a';	
+SELECT title FROM titles WHERE title REGEXP 'a.';	
+SELECT title FROM titles WHERE title REGEXP 'computer';
+SELECT title FROM titles WHERE title REGEXP '^a';
+SELECT title FROM titles WHERE title REGEXP '^The';
+SELECT title FROM titles WHERE title REGEXP 'cooking';
+SELECT title FROM titles WHERE title REGEXP 'cooking$';
 
-SELECT * FROM titles WHERE title REGEXP '[pol]';	
-SELECT * FROM titles WHERE title REGEXP '[a-z]';	-- 해당 범위
-SELECT * FROM titles WHERE title REGEXP '^[a-z]';
-SELECT * FROM titles WHERE title REGEXP '^[a-z0-9]';
-SELECT * FROM titles WHERE title REGEXP '[가-힣]';	-- 한글로 시작하는 것만
-SELECT * FROM titles WHERE title REGEXP '[ㄱ-힣]';	-- 한글로 시작하는 것만
-SELECT * FROM titles WHERE title REGEXP '^[ㄱ-힣0-9]';
-SELECT * FROM titles WHERE title REGEXP 'comb*';
-SELECT * FROM titles WHERE title REGEXP 'comb*a';
-SELECT * FROM titles WHERE title REGEXP '^[0-9]';	-- 0-9로 시작
-SELECT * FROM titles WHERE title REGEXP '^[A-z]';	-- A-z로 시작
-SELECT * FROM titles WHERE title REGEXP '^S.';	-- Si, St로 시작
-SELECT * FROM titles WHERE title REGEXP '^S[it].';	-- Si, St로 시작
-SELECT * FROM titles WHERE title REGEXP '^S[^it].';	-- Si, St는 제외
-SELECT * FROM titles WHERE title REGEXP '^[c]*.*de$';
+SELECT title FROM titles WHERE title REGEXP '[pol]';		
+SELECT title FROM titles WHERE title REGEXP '[a-z]';	-- 해당 범위
+SELECT title FROM titles WHERE title REGEXP '^[a-z]';
+SELECT title FROM titles WHERE title REGEXP '^[a-z0-9]';
+SELECT title FROM titles WHERE title REGEXP '[가-힣]';	-- 한글로 시작하는 것만
+SELECT title FROM titles WHERE title REGEXP '[ㄱ-힣]';	-- 한글로 시작하는 것만
+SELECT title FROM titles WHERE title REGEXP '^[ㄱ-힣0-9]';
+SELECT title FROM titles WHERE title REGEXP 'comb*'; 	-- ??
+SELECT title FROM titles WHERE title REGEXP 'comb*a';
+SELECT title FROM titles WHERE title REGEXP '^[0-9]';	-- 0-9로 시작
+SELECT title FROM titles WHERE title REGEXP '^[A-z]';	-- A-z로 시작
+SELECT title FROM titles WHERE title REGEXP '^S.';	-- Si, St로 시작
+SELECT title FROM titles WHERE title REGEXP '^S[it].';	-- Si, St로 시작
+SELECT title FROM titles WHERE title REGEXP '^S[^it].';	-- Si, St는 제외
+SELECT title FROM titles WHERE title REGEXP '^c*.*de$'; -- ??
 
 SELECT REGEXP_LIKE('a', '[a-d]'); 	-- [ ] 안에 들어간 것 중 하나
 SELECT REGEXP_LIKE('abcde', '[a-d]'); 	-- [ ] 안에 들어간 것 중 하나
 SELECT REGEXP_LIKE('hijk', '[a-d]'); 	-- [ ] 안에 들어간 것 중 하나
 SELECT REGEXP_LIKE('haijk', '[a-d]'); 	-- [ ] 안에 들어간 것 중 하나
 SELECT REGEXP_LIKE('haijk', '^[a-d]'); 	-- ^ 줄의 앞
-SELECT REGEXP_LIKE('aijk', '[a-d]'); 	-- ^ 줄의 앞
+SELECT REGEXP_LIKE('aijk', '^[a-d]'); 	-- ^ 줄의 앞
 SELECT REGEXP_LIKE('ABC', '[a-d]');	-- 대소문자 
 SELECT REGEXP_LIKE('aef', '^[a-d]$'); 	-- $ 줄의 끝
 SELECT REGEXP_LIKE('adddd', '^[a-d]$'); 	-- $ 줄의 끝

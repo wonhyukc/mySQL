@@ -1,0 +1,9 @@
+**/.dbeaver/
+**/.settings/
+**/.project
+
+**/*.bak
+**/tmp*
+
+**/Q *.sql/*
+**/.vscode/*
